@@ -1,8 +1,11 @@
 {
-    "name": "View",
-    "rootNamespace": "View",
+    "name": "Installers",
+    "rootNamespace": "Installers",
     "references": [
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:18d4e93a4f006884495fcb22e15e930e",
+        "GUID:90ad14b0d7ccbc94e88b8a103dfb8d79",
+        "GUID:864b99bce59759045b9398ec66fe72f7"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

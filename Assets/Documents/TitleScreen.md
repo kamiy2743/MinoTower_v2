@@ -3,7 +3,6 @@ classDiagram
     class TitleScreenModel {
         +EnterSinglePlayScreen()
         +EnterMultiPlayScreen()
-        +QuitGame()
     }
 
     class TitleScreenPresenter {
@@ -13,7 +12,6 @@ classDiagram
     class TitleScreenView {
         +OnSinglePlayButtonClicked IObservable~Uint~
         +OnMultiPlayButtonClicked IObservable~Uint~
-        +OnQuitGameButtonClicked IObservable~Uint~
     }
 
     TitleScreenPresenter o--> TitleScreenModel
