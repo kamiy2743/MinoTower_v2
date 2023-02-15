@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Installers
 {
-    public class TitleScreenInstaller : MonoInstaller
+    public sealed class TitleScreenInstaller : MonoInstaller
     {
         [SerializeField] TitleScreenView titleScreenView;
         

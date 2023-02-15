@@ -2,7 +2,6 @@
 using Model;
 using Zenject;
 using UniRx;
-using UnityEngine;
 using View;
 
 namespace Presenter
