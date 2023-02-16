@@ -45,7 +45,7 @@ namespace Model
             await _singlePlayScreenView.MoveAndRotateMinoAsync(mino.Id, ct);
 
             // ミノが停止するか、土台から落ちるまで待機
-            var allMinoStopped = await _singlePlayScreenView.WaitingToMinoFallAsync(ct);
+            var allMinoStopped = await _singlePlayScreenView.WaitMinoFallAsync(mino.Id, ct);
             if (allMinoStopped)
             {
                 GameCycleAsync(ct).Forget();
@@ -56,7 +56,7 @@ namespace Model
             _singlePlayScreenView.ShowResultView();
 
             // リトライボタンかタイトルボタンが押されるのを待つ
-            var retryGame = await _singlePlayScreenView.WaitingRetryOrBackToTitleAsync(ct);
+            var retryGame = await _singlePlayScreenView.WaitRetryOrBackToTitleAsync(ct);
             if (retryGame)
             {
                 await ResetAsync(ct);

@@ -27,5 +27,10 @@ namespace View
         {
             _rigidbody.isKinematic = !active;
         }
+
+        internal bool IsSleeping()
+        {
+            return _rigidbody.IsSleeping();
+        }
     }
 }

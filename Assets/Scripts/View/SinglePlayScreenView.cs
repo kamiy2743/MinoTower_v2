@@ -21,7 +21,7 @@ namespace View
         [SerializeField] ObservableEventTrigger moveMinoEventTrigger;
 
         [Inject] MinoSpawnerView _minoSpawnerView;
-
+        
         readonly Dictionary<MinoId, MinoView> _minoViews = new Dictionary<MinoId, MinoView>();
         MinoView _currentActiveMino = null;
 
@@ -68,13 +68,15 @@ namespace View
         }
         
         /// <return>AllMinoStopped</return>
-        public async UniTask<bool> WaitingToMinoFallAsync(CancellationToken ct)
+        public async UniTask<bool> WaitMinoFallAsync(MinoId minoId, CancellationToken ct)
         {
-            var waitingAllMinoStopTask = UniTask.Delay(TimeSpan.FromSeconds(2), cancellationToken: ct);
+            var minoView = _minoViews[minoId];
+            minoView.SetSimulation(true);
+            
             var gameOverObservable = Observable.Timer(TimeSpan.FromSeconds(21));
 
             var result = await UniTask.WhenAny(
-                waitingAllMinoStopTask,
+                WaitAllMinoStopTask.Start(_minoViews.Values, ct),
                 gameOverObservable.ToUniTask(cancellationToken: ct)
             );
 
@@ -82,7 +84,7 @@ namespace View
         }
         
         /// <return>RetryGame</return>
-        public async UniTask<bool> WaitingRetryOrBackToTitleAsync(CancellationToken ct)
+        public async UniTask<bool> WaitRetryOrBackToTitleAsync(CancellationToken ct)
         {
             var retryObservable = Observable.Timer(TimeSpan.FromSeconds(2));
             var backToTitleObservable = Observable.Timer(TimeSpan.FromSeconds(21));
