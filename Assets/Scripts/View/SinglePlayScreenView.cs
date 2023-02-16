@@ -19,6 +19,7 @@ namespace View
         [SerializeField] RectTransform minoSpawnPoint;
         [SerializeField] Button rotateButton;
         [SerializeField] ObservableEventTrigger moveMinoEventTrigger;
+        [SerializeField] ObservableTrigger2DTrigger gameOverAreaTrigger;
 
         [Inject] MinoSpawnerView _minoSpawnerView;
         
@@ -72,8 +73,10 @@ namespace View
         {
             var minoView = _minoViews[minoId];
             minoView.SetSimulation(true);
-            
-            var gameOverObservable = Observable.Timer(TimeSpan.FromSeconds(21));
+
+            var gameOverObservable = gameOverAreaTrigger.OnTriggerStay2DAsObservable()
+                .Where(c => c.gameObject.GetComponentInParent<MinoView>())
+                .First();
 
             var result = await UniTask.WhenAny(
                 WaitAllMinoStopTask.Start(_minoViews.Values, ct),
