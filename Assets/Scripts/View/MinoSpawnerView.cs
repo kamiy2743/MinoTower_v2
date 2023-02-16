@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Domain;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace View
@@ -28,6 +29,7 @@ namespace View
         {
             var minoView = MonoBehaviour.Instantiate(_minoViewPrefab, parent: parent);
             minoView.transform.position = spawnPoint;
+            minoView.SetSimulation(false);
             
             // mino.BlockPositionsをもとにブロックを作成
             {
@@ -41,7 +43,7 @@ namespace View
                 foreach (Vector2 blockPosition in mino.BlockPositions)
                 {
                     var minoBlock = MonoBehaviour.Instantiate(_minoBlockPrefab, parent: minoView.transform);
-                    minoBlock.transform.localPosition = (blockPosition - center) * _minoBlockScale;
+                    minoBlock.transform.localPosition = ((blockPosition - center) * _minoBlockScale);
                     minoBlock.transform.localScale = new Vector3(_minoBlockScale, _minoBlockScale, 1);
                 }
             }

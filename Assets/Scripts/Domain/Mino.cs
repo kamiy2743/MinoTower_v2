@@ -6,18 +6,20 @@ namespace Domain
 {
     public sealed record Mino
     {
-        readonly Vector2Int[] _blockPositions;
+        public readonly MinoId Id = new MinoId();
+        
+        readonly HashSet<Vector2Int> _blockPositions;
         public IReadOnlyCollection<Vector2Int> BlockPositions => _blockPositions;
 
         public Mino(int blockCount, Random random)
         {
-            _blockPositions = new Vector2Int[blockCount];
+            _blockPositions = new HashSet<Vector2Int>(blockCount);
             var currentPosition = new Vector2Int(0, 0);
 
             for (int i = 0; i < blockCount; i++)
             {
-                _blockPositions[i] = currentPosition;
-
+                _blockPositions.Add(currentPosition);
+                
                 // 上下左右ランダムに追加
                 switch (random.NextInt(1, 4))
                 {

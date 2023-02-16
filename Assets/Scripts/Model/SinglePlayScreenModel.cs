@@ -37,20 +37,26 @@ namespace Model
 
         async UniTask GameCycleAsync(CancellationToken ct)
         {
+            // ミノをスポーンさせる
             var mino = _minoFactory.CreateRandom();
             await _singlePlayScreenView.SpawnMinoAsync(mino, ct);
 
-            var continueGameCycle = await WaitingToFallAsync(ct);
-            if (continueGameCycle)
+            // ミノの操作を待機
+            await _singlePlayScreenView.MoveAndRotateMinoAsync(mino.Id, ct);
+
+            // ミノが停止するか、土台から落ちるまで待機
+            var allMinoStopped = await _singlePlayScreenView.WaitingToMinoFallAsync(ct);
+            if (allMinoStopped)
             {
                 GameCycleAsync(ct).Forget();
                 return;
             }
             
-            // GameOver
+            // ゲームオーバー
             _singlePlayScreenView.ShowResultView();
 
-            var retryGame = await WaitingRetryOrBackToTitleAsync(ct);
+            // リトライボタンかタイトルボタンが押されるのを待つ
+            var retryGame = await _singlePlayScreenView.WaitingRetryOrBackToTitleAsync(ct);
             if (retryGame)
             {
                 await ResetAsync(ct);
@@ -61,34 +67,6 @@ namespace Model
                 Debug.Log("title");
                 BackToTitle();
             }
-        }
-
-        /// <return>ContinueGameCycle</return>
-        async UniTask<bool> WaitingToFallAsync(CancellationToken ct)
-        {
-            var waitingAllMinoStopTask = UniTask.Delay(TimeSpan.FromSeconds(2), cancellationToken: ct);
-            var gameOverObservable = _singlePlayScreenView.OnCollisionGameOverArea.First();
-
-            var result = await UniTask.WhenAny(
-                waitingAllMinoStopTask,
-                gameOverObservable.ToUniTask(cancellationToken: ct)
-            );
-
-            return result == 0;
-        }
-
-        /// <return>RetryGame</return>
-        async UniTask<bool> WaitingRetryOrBackToTitleAsync(CancellationToken ct)
-        {
-            var retryObservable = _singlePlayScreenView.OnRetryButtonClicked.First();
-            var backToTitleObservable = _singlePlayScreenView.OnTitleButtonClicked.First();
-
-            var result = await UniTask.WhenAny(
-                retryObservable.ToUniTask(cancellationToken: ct),
-                backToTitleObservable.ToUniTask(cancellationToken: ct)
-            );
-
-            return result.winArgumentIndex == 0;
         }
 
         void BackToTitle()

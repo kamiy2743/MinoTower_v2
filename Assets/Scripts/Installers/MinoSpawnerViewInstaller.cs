@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Installers
 {
-    public class MinoSpawnerViewInstaller : MonoInstaller
+    public sealed class MinoSpawnerViewInstaller : MonoInstaller
      {
          [SerializeField] MinoView minoViewPrefab;
          [SerializeField] GameObject minoBlockPrefab;
