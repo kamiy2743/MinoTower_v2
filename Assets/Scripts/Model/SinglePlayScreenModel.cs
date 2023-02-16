@@ -16,6 +16,8 @@ namespace Model
         
         readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
+        float _towerVertexY;
+
         [Inject]
         SinglePlayScreenModel(SinglePlayScreenView singlePlayScreenView)
         {
@@ -37,6 +39,9 @@ namespace Model
 
         async UniTask GameCycleAsync(CancellationToken ct)
         {
+            // タワーの頂上まで画面をスクロール
+            await _singlePlayScreenView.ScrollToTowerVertexAsync();
+            
             // ミノをスポーンさせる
             var mino = _minoFactory.CreateRandom();
             await _singlePlayScreenView.SpawnMinoAsync(mino, ct);

@@ -7,7 +7,6 @@ using Domain;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -17,17 +16,20 @@ namespace View
     {
         [SerializeField] Transform minoParent;
         [SerializeField] RectTransform minoSpawnPoint;
+        [SerializeField] RectTransform towerVertexPoint;
         [SerializeField] Button rotateButton;
         [SerializeField] ObservableEventTrigger moveMinoEventTrigger;
         [SerializeField] ObservableTrigger2DTrigger gameOverAreaTrigger;
 
         [Inject] MinoSpawnerView _minoSpawnerView;
-        
+
+        CameraScrollerView _cameraScrollerView;
         readonly Dictionary<MinoId, MinoView> _minoViews = new Dictionary<MinoId, MinoView>();
         MinoView _currentActiveMino = null;
 
         void Awake()
         {
+            _cameraScrollerView = new CameraScrollerView(towerVertexPoint);
             moveMinoEventTrigger.gameObject.SetActive(false);
             
             moveMinoEventTrigger.OnDragAsObservable()
@@ -49,6 +51,22 @@ namespace View
                 _minoViews.Remove(minoId);
                 Destroy(minoView.gameObject);
             }
+        }
+        
+        public float GetTowerVertexY()
+        {
+            var maxY = float.NegativeInfinity;
+            foreach (var minoView in _minoViews.Values)
+            {
+                maxY = Mathf.Max(minoView.GetVertexY(), maxY);
+            }
+
+            return maxY;
+        }
+
+        public async UniTask ScrollToTowerVertexAsync()
+        {
+            await _cameraScrollerView.ScrollToTowerVertexAsync(GetTowerVertexY());
         }
         
         public async UniTask SpawnMinoAsync(Mino mino, CancellationToken ct)

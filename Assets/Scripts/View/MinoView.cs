@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace View
 {
     public sealed class MinoView : MonoBehaviour
     {
-        [SerializeField] Rigidbody2D _rigidbody;
+        [SerializeField] new Rigidbody2D rigidbody;
+
+        readonly List<Transform> _blocks = new List<Transform>();
+        internal void AddBlock(Transform block) => _blocks.Add(block);
 
         internal void SetX(float x)
         {
@@ -25,12 +29,23 @@ namespace View
         
         internal void SetSimulation(bool active)
         {
-            _rigidbody.isKinematic = !active;
+            rigidbody.isKinematic = !active;
         }
 
         internal bool IsSleeping()
         {
-            return _rigidbody.IsSleeping();
+            return rigidbody.IsSleeping();
+        }
+
+        internal float GetVertexY()
+        {
+            var maxY = float.NegativeInfinity;
+            foreach (var block in _blocks)
+            {
+                maxY = Mathf.Max(block.position.y + (block.localScale.y * 0.5f), maxY);
+            }
+
+            return maxY;
         }
     }
 }

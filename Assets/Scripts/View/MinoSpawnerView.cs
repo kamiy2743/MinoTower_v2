@@ -45,6 +45,8 @@ namespace View
                     var minoBlock = MonoBehaviour.Instantiate(_minoBlockPrefab, parent: minoView.transform);
                     minoBlock.transform.localPosition = ((blockPosition - center) * _minoBlockScale);
                     minoBlock.transform.localScale = new Vector3(_minoBlockScale, _minoBlockScale, 1);
+                    
+                    minoView.AddBlock(minoBlock.transform);
                 }
             }
 

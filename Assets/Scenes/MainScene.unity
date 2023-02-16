@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minoViewPrefab: {fileID: 3680178814130618713, guid: 11526547e6e0d4845baacdcfdace40eb, type: 3}
   minoBlockPrefab: {fileID: 2388568421796277661, guid: 03559e5aa7a42f44f8ac9c4d39cc1e2c, type: 3}
-  minoBlockScale: 0.5
+  minoBlockScale: 10
 --- !u!1001 &7640351495359961128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -383,6 +383,14 @@ PrefabInstance:
     - target: {fileID: 1041619122543292529, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539978437325637581, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 571.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539978437325637581, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 111.72
       objectReference: {fileID: 0}
     - target: {fileID: 4217323320251313935, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
       propertyPath: m_RootOrder
