@@ -246,10 +246,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8662318589334997239, guid: 3338cbc068def7a4aae63d0aae57b6f6, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 75.29999
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3338cbc068def7a4aae63d0aae57b6f6, type: 3}
 --- !u!114 &1728655693 stripped
@@ -275,6 +271,7 @@ GameObject:
   - component: {fileID: 1732173770}
   - component: {fileID: 1732173769}
   - component: {fileID: 1732173772}
+  - component: {fileID: 1732173773}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -311,6 +308,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 1732173769}
   - {fileID: 1732173772}
+  - {fileID: 1732173773}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -356,6 +354,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singlePlayScreenView: {fileID: 1728655693}
+--- !u!114 &1732173773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732173768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7669027acf950204786d504c3382fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minoViewPrefab: {fileID: 3680178814130618713, guid: 11526547e6e0d4845baacdcfdace40eb, type: 3}
+  minoBlockPrefab: {fileID: 2388568421796277661, guid: 03559e5aa7a42f44f8ac9c4d39cc1e2c, type: 3}
+  minoBlockScale: 0.5
 --- !u!1001 &7640351495359961128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -370,14 +383,6 @@ PrefabInstance:
     - target: {fileID: 1041619122543292529, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539978437325637581, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 571.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539978437325637581, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 111.72
       objectReference: {fileID: 0}
     - target: {fileID: 4217323320251313935, guid: dd77bddaf41f7a84f93f59d448bc80bd, type: 3}
       propertyPath: m_RootOrder

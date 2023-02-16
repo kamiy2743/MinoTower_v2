@@ -13,6 +13,7 @@ namespace Presenter
         
         readonly CompositeDisposable _compositeDisposable = new CompositeDisposable();
 
+        [Inject]
         TitleScreenPresenter(TitleScreenModel titleScreenModel, TitleScreenView titleScreenView)
         {
             _titleScreenModel = titleScreenModel;

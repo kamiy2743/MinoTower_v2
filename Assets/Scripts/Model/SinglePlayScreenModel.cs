@@ -3,6 +3,7 @@ using System.Threading;
 using View;
 using Zenject;
 using Cysharp.Threading.Tasks;
+using Domain;
 using UniRx;
 using UnityEngine;
 
@@ -11,11 +12,15 @@ namespace Model
     public sealed class SinglePlayScreenModel : IInitializable, IDisposable
     {
         readonly SinglePlayScreenView _singlePlayScreenView;
+        readonly MinoFactory _minoFactory;
+        
         readonly CancellationTokenSource _cts = new CancellationTokenSource();
 
+        [Inject]
         SinglePlayScreenModel(SinglePlayScreenView singlePlayScreenView)
         {
             _singlePlayScreenView = singlePlayScreenView;
+            _minoFactory = new MinoFactory(DateTime.Now.GetHashCode());
         }
 
         public void Initialize() => InitializeAsync().Forget();
@@ -27,12 +32,13 @@ namespace Model
 
         async UniTask ResetAsync(CancellationToken ct)
         {
-            await _singlePlayScreenView.RefreshMinoAsync(ct);
+            _singlePlayScreenView.RefreshMino();
         }
 
         async UniTask GameCycleAsync(CancellationToken ct)
         {
-            await _singlePlayScreenView.SpawnMinoAsync(ct);
+            var mino = _minoFactory.CreateRandom();
+            await _singlePlayScreenView.SpawnMinoAsync(mino, ct);
 
             var continueGameCycle = await WaitingToFallAsync(ct);
             if (continueGameCycle)
