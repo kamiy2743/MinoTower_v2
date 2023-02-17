@@ -15,21 +15,27 @@ namespace View
                 {
                     await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: ct);
 
-                    var completed = true;
+                    var sleeping = true;
                     foreach (var minoView in minoViews)
                     {
-                        if (!minoView.IsSleeping())
+                        if (minoView.GetVelocity() > 0.2f)
                         {
-                            completed = false;
+                            sleeping = false;
                             break;
                         }
                     }
 
-                    if (completed)
+                    if (sleeping)
                     {
-                        return;
+                        foreach (var minoView in minoViews)
+                        {
+                            minoView.Sleep();
+                        }
+                        break;
                     }
                 }
+
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             });
         }
     }

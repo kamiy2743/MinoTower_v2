@@ -17,10 +17,10 @@ namespace View
         [SerializeField] Transform minoParent;
         
         [Space(20)]
-        [SerializeField] RectTransform minoSpawnPoint;
-        [SerializeField] RectTransform towerVertexPoint;
-        [SerializeField] RectTransform maxTowerVertexPoint;
-        [SerializeField] RectTransform spawnAndVertexPoint;
+        [SerializeField] Transform minoSpawnPoint;
+        [SerializeField] Transform towerVertexPoint;
+        [SerializeField] Transform maxTowerVertexPoint;
+        [SerializeField] Transform spawnAndVertexPoint;
         [SerializeField] Transform groundPoint;
         
         [Space(20)]
@@ -39,7 +39,7 @@ namespace View
         void Awake()
         {
             _cameraScrollerView = new CameraScrollerView(towerVertexPoint);
-            _spawnAndVertexPointScrollerView = new SpawnAndVertexPointScrollerView(spawnAndVertexPoint, maxTowerVertexPoint);
+            _spawnAndVertexPointScrollerView = new SpawnAndVertexPointScrollerView(spawnAndVertexPoint);
             
             moveMinoEventTrigger.gameObject.SetActive(false);
             moveMinoEventTrigger.OnDragAsObservable()

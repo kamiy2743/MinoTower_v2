@@ -11,7 +11,7 @@ namespace View
         readonly Transform _cameraTransform;
         readonly float _towerVertexPointY;
 
-        internal CameraScrollerView(RectTransform towerVertexPoint)
+        internal CameraScrollerView(Transform towerVertexPoint)
         {
             _cameraTransform = Camera.main.transform;
             

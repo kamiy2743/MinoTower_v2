@@ -36,9 +36,14 @@ namespace View
             }
         }
 
-        internal bool IsSleeping()
+        internal float GetVelocity()
         {
-            return rigidbody.IsSleeping();
+            return Mathf.Max(rigidbody.velocity.magnitude, rigidbody.angularVelocity);
+        }
+
+        internal void Sleep()
+        {
+            rigidbody.Sleep();
         }
 
         internal float GetVertexY()

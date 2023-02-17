@@ -29,7 +29,6 @@ namespace View
         {
             var minoView = MonoBehaviour.Instantiate(_minoViewPrefab, parent: parent);
             minoView.transform.position = spawnPoint;
-            minoView.SetSimulation(false);
             
             // mino.BlockPositionsをもとにブロックを作成
             {
@@ -49,6 +48,7 @@ namespace View
                     minoView.AddBlock(minoBlock.GetComponent<BoxCollider2D>());
                 }
             }
+            minoView.SetSimulation(false);
 
             // アニメーション
             {
