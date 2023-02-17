@@ -17,6 +17,7 @@ namespace View
 
         internal async UniTask ShowAsync(CancellationToken ct)
         {
+            gameObject.SetActive(true);
             canvasGroup.DOKill();
             canvasGroup.gameObject.SetActive(true);
             
@@ -25,6 +26,7 @@ namespace View
 
         internal async UniTask HideAsync(CancellationToken ct, bool immediate = false)
         {
+            gameObject.SetActive(true);
             canvasGroup.DOKill();
 
             if (!immediate)
