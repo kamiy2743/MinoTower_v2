@@ -15,9 +15,7 @@ namespace Model
         readonly MinoFactory _minoFactory;
         
         readonly CancellationTokenSource _cts = new CancellationTokenSource();
-
-        float _towerVertexY;
-
+        
         [Inject]
         SinglePlayScreenModel(SinglePlayScreenView singlePlayScreenView)
         {
@@ -34,7 +32,7 @@ namespace Model
 
         async UniTask ResetAsync(CancellationToken ct)
         {
-            _singlePlayScreenView.RefreshMino();
+            await _singlePlayScreenView.ResetAsync(ct);
         }
 
         async UniTask GameCycleAsync(CancellationToken ct)
@@ -53,13 +51,14 @@ namespace Model
             var allMinoStopped = await _singlePlayScreenView.WaitMinoFallAsync(mino.Id, ct);
             if (allMinoStopped)
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+                await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: ct);
                 GameCycleAsync(ct).Forget();
                 return;
             }
             
             // ゲームオーバー
-            _singlePlayScreenView.ShowResultScreen();
+            var resultHeight = _singlePlayScreenView.GetResultHeight();
+            await _singlePlayScreenView.ShowResultScreenAsync(resultHeight, ct);
 
             // リトライボタンかタイトルボタンが押されるのを待つ
             var retryGame = await _singlePlayScreenView.WaitRetryOrBackToTitleAsync(ct);
@@ -70,14 +69,9 @@ namespace Model
             }
             else
             {
-                Debug.Log("title");
-                BackToTitle();
+                await ResetAsync(ct);
+                GameCycleAsync(ct).Forget();
             }
-        }
-
-        void BackToTitle()
-        {
-            
         }
 
         public void Dispose()

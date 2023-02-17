@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,8 +21,14 @@ namespace View
         [SerializeField] ObservableTrigger2DTrigger gameOverAreaTrigger;
         
         readonly Dictionary<MinoId, MinoView> _minoViews = new Dictionary<MinoId, MinoView>();
-        
-        internal void RefreshMino()
+
+        internal async UniTask ResetAsync(CancellationToken ct)
+        {
+            RefreshMino();
+            await ScrollToTowerVertexAsync(ct);
+        }
+
+        void RefreshMino()
         {
             foreach (var minoId in _minoViews.Keys.ToList())
             {
@@ -40,6 +47,11 @@ namespace View
             }
 
             return maxY;
+        }
+
+        internal float GetResultHeight()
+        {
+            return GetTowerVertexY() - groundPoint.position.y;
         }
 
         internal async UniTask ScrollToTowerVertexAsync(CancellationToken ct)

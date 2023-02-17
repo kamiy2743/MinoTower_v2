@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Cysharp.Threading.Tasks;
 using Domain;
-using UniRx;
 using UnityEngine;
 
 namespace View
@@ -10,8 +8,15 @@ namespace View
     public sealed class SinglePlayScreenView : MonoBehaviour
     {
         [SerializeField] PlayScreenView playScreenView;
-
-        public void RefreshMino() => playScreenView.RefreshMino();
+        [SerializeField] ResultScreenView resultScreenView;
+        
+        public async UniTask ResetAsync(CancellationToken ct)
+        {
+            await UniTask.WhenAll(
+                playScreenView.ResetAsync(ct),
+                resultScreenView.HideAsync(ct)
+            );
+        }
 
         public async UniTask ScrollToTowerVertexAsync(CancellationToken ct) => await playScreenView.ScrollToTowerVertexAsync(ct);
 
@@ -21,24 +26,16 @@ namespace View
 
         /// <return>AllMinoStopped</return>
         public async UniTask<bool> WaitMinoFallAsync(MinoId minoId, CancellationToken ct) => await playScreenView.WaitMinoFallAsync(minoId, ct);
+
+        public float GetResultHeight() => playScreenView.GetResultHeight();
         
+        public async UniTask ShowResultScreenAsync(float resultHeight, CancellationToken ct)
+        {
+            resultScreenView.SetResultHeight(resultHeight);
+            await resultScreenView.ShowAsync(ct);
+        }
+
         /// <return>RetryGame</return>
-        public async UniTask<bool> WaitRetryOrBackToTitleAsync(CancellationToken ct)
-        {
-            var retryObservable = Observable.Timer(TimeSpan.FromSeconds(2));
-            var backToTitleObservable = Observable.Timer(TimeSpan.FromSeconds(21));
-
-            var result = await UniTask.WhenAny(
-                retryObservable.ToUniTask(cancellationToken: ct),
-                backToTitleObservable.ToUniTask(cancellationToken: ct)
-            );
-
-            return result.winArgumentIndex == 0;
-        }
-        
-        public void ShowResultScreen()
-        {
-            Debug.Log("result");
-        }
+        public async UniTask<bool> WaitRetryOrBackToTitleAsync(CancellationToken ct) => await resultScreenView.WaitRetryOrBackToTitleAsync(ct);
     }
 }

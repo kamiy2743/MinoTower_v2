@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playScreenView: {fileID: 2572101997403767127}
+  resultScreenView: {fileID: 4711023640729372670}
 --- !u!1 &1811694137704615703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,6 +2025,7 @@ GameObject:
   - component: {fileID: 1226397056362633607}
   - component: {fileID: 4651937263675191143}
   - component: {fileID: 8012576734027890710}
+  - component: {fileID: 8024535171980353009}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2115,6 +2117,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &8024535171980353009
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660024289395275975}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8092617651067336436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,7 +2166,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 230}
-  m_SizeDelta: {x: 172.49, y: 113.51}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4799272856186659981
 CanvasRenderer:
@@ -2555,7 +2569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3559850158195160496
 Transform:
   m_ObjectHideFlags: 0
@@ -2587,3 +2601,4 @@ MonoBehaviour:
   resultHeightText: {fileID: 2303997564648907578}
   retryButton: {fileID: 7981539286387462980}
   titleButton: {fileID: 8333206797834807555}
+  canvasGroup: {fileID: 8024535171980353009}
