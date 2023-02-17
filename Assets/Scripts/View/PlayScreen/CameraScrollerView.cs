@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -7,12 +5,14 @@ using UnityEngine;
 
 namespace View
 {
-    sealed class CameraScrollerView
+    sealed class CameraScrollerView : MonoBehaviour
     {
-        readonly Transform _cameraTransform;
-        readonly float _towerVertexPointY;
+        [SerializeField] Transform towerVertexPoint;
+        
+        Transform _cameraTransform;
+        float _towerVertexPointY;
 
-        internal CameraScrollerView(Transform towerVertexPoint)
+        void Awake()
         {
             _cameraTransform = Camera.main.transform;
             

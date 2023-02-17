@@ -6,50 +6,20 @@ using Domain;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
-using Zenject;
 
 namespace View
 {
     sealed class PlayScreenView : MonoBehaviour
     {
-        [SerializeField] Transform minoParent;
+        [SerializeField] CameraScrollerView cameraScrollerView;
+        [SerializeField] SpawnAndVertexPointScrollerView spawnAndVertexPointScrollerView;
+        [SerializeField] MinoSpawnerView minoSpawnerView;
+        [SerializeField] MinoControllerView minoControllerView;
         
-        [Space(20)]
-        [SerializeField] Transform minoSpawnPoint;
-        [SerializeField] Transform towerVertexPoint;
-        [SerializeField] Transform spawnAndVertexPoint;
         [SerializeField] Transform groundPoint;
-        
-        [Space(20)]
-        [SerializeField] Button rotateButton;
-        [SerializeField] ObservableEventTrigger moveMinoEventTrigger;
         [SerializeField] ObservableTrigger2DTrigger gameOverAreaTrigger;
-
-        [Inject] MinoSpawnerView _minoSpawnerView;
-
-        CameraScrollerView _cameraScrollerView;
-        SpawnAndVertexPointScrollerView _spawnAndVertexPointScrollerView;
         
         readonly Dictionary<MinoId, MinoView> _minoViews = new Dictionary<MinoId, MinoView>();
-        MinoView _currentActiveMino = null;
-
-        void Awake()
-        {
-            _cameraScrollerView = new CameraScrollerView(towerVertexPoint);
-            _spawnAndVertexPointScrollerView = new SpawnAndVertexPointScrollerView(spawnAndVertexPoint);
-            
-            moveMinoEventTrigger.gameObject.SetActive(false);
-            moveMinoEventTrigger.OnDragAsObservable()
-                .Merge(moveMinoEventTrigger.OnPointerDownAsObservable().First())
-                .Select(e => Camera.main.ScreenToWorldPoint(e.position))
-                .Subscribe(position => _currentActiveMino?.SetX(position.x))
-                .AddTo(this);
-
-            rotateButton
-                .BindToOnClick(_ => _currentActiveMino?.RotateZAsync(-45).ToObservable().AsUnitObservable())
-                .AddTo(this);
-        }
         
         internal void RefreshMino()
         {
@@ -76,25 +46,19 @@ namespace View
         {
             var towerVertexY = GetTowerVertexY();
             
-            _spawnAndVertexPointScrollerView.ScrollToTowerVertex(towerVertexY);
-            await _cameraScrollerView.ScrollToTowerVertexAsync(towerVertexY, ct);
+            spawnAndVertexPointScrollerView.ScrollToTowerVertex(towerVertexY);
+            await cameraScrollerView.ScrollToTowerVertexAsync(towerVertexY, ct);
         }
         
         internal async UniTask SpawnMinoAsync(Mino mino, CancellationToken ct)
         {
-            var minoView = await _minoSpawnerView.SpawnAsync(mino,minoSpawnPoint.position,  minoParent, ct);
+            var minoView = await minoSpawnerView.SpawnAsync(mino, ct);
             _minoViews.Add(mino.Id, minoView);
         }
 
         internal async UniTask MoveAndRotateMinoAsync(MinoId minoId, CancellationToken ct)
         {
-            moveMinoEventTrigger.gameObject.SetActive(true);
-
-            _currentActiveMino = _minoViews[minoId];
-            await moveMinoEventTrigger.OnPointerUpAsObservable().First().ToUniTask(cancellationToken: ct);
-            _currentActiveMino = null;
-            
-            moveMinoEventTrigger.gameObject.SetActive(false);
+            await minoControllerView.MoveAndRotateMinoAsync(_minoViews[minoId], ct);
         }
         
         /// <return>AllMinoStopped</return>

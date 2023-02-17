@@ -3,32 +3,21 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Domain;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Zenject;
 
 namespace View
 {
-    public sealed class MinoSpawnerView
+    sealed class MinoSpawnerView : MonoBehaviour
     {
-        readonly MinoView _minoViewPrefab;
-        readonly GameObject _minoBlockPrefab;
-        readonly float _minoBlockScale;
-        
-        [Inject]
-        MinoSpawnerView(
-            MinoView minoViewPrefab, 
-            GameObject minoBlockPrefab, 
-            float minoBlockScale)
-        {
-            _minoViewPrefab = minoViewPrefab;
-            _minoBlockPrefab = minoBlockPrefab;
-            _minoBlockScale = minoBlockScale;
-        }
+        [SerializeField] MinoView minoViewPrefab;
+        [SerializeField] GameObject minoBlockPrefab;
+        [SerializeField] float minoBlockScale;
+        [SerializeField] Transform minoParent;
+        [SerializeField] Transform minoSpawnPoint;
 
-        internal async UniTask<MinoView> SpawnAsync(Mino mino, Vector2 spawnPoint, Transform parent, CancellationToken ct)
+        internal async UniTask<MinoView> SpawnAsync(Mino mino, CancellationToken ct)
         {
-            var minoView = MonoBehaviour.Instantiate(_minoViewPrefab, parent: parent);
-            minoView.transform.position = spawnPoint;
+            var minoView = MonoBehaviour.Instantiate(minoViewPrefab, parent: minoParent);
+            minoView.transform.position = minoSpawnPoint.position;
             
             // mino.BlockPositionsをもとにブロックを作成
             {
@@ -41,9 +30,9 @@ namespace View
             
                 foreach (Vector2 blockPosition in mino.BlockPositions)
                 {
-                    var minoBlock = MonoBehaviour.Instantiate(_minoBlockPrefab, parent: minoView.transform);
-                    minoBlock.transform.localPosition = ((blockPosition - center) * _minoBlockScale);
-                    minoBlock.transform.localScale = new Vector3(_minoBlockScale, _minoBlockScale, 1);
+                    var minoBlock = MonoBehaviour.Instantiate(minoBlockPrefab, parent: minoView.transform);
+                    minoBlock.transform.localPosition = ((blockPosition - center) * minoBlockScale);
+                    minoBlock.transform.localScale = new Vector3(minoBlockScale, minoBlockScale, 1);
                     
                     minoView.AddBlock(minoBlock.GetComponent<BoxCollider2D>());
                 }

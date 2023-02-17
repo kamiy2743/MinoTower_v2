@@ -207,14 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7e6ccda98d4685b0e3ae0132623b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minoParent: {fileID: 5721072248929347164}
-  minoSpawnPoint: {fileID: 5023614453175415235}
-  towerVertexPoint: {fileID: 8969187964936565780}
-  spawnAndVertexPoint: {fileID: 8812595030270760949}
-  groundPoint: {fileID: 2429152644572839337}
-  rotateButton: {fileID: 5467692481435344316}
-  moveMinoEventTrigger: {fileID: 4469384465795368996}
-  gameOverAreaTrigger: {fileID: 3363951371354387582}
+  playScreenView: {fileID: 2572101997403767127}
 --- !u!1 &1811694137704615703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,6 +1367,10 @@ GameObject:
   m_Component:
   - component: {fileID: 305700636959131690}
   - component: {fileID: 2572101997403767127}
+  - component: {fileID: 4443175990391789273}
+  - component: {fileID: 7280214224961461099}
+  - component: {fileID: 7791808503411507433}
+  - component: {fileID: 5072894958003855573}
   m_Layer: 0
   m_Name: PlayScreen
   m_TagString: Untagged
@@ -1412,14 +1409,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87fa1e708d74e684a9936543f25d030f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minoParent: {fileID: 5721072248929347164}
-  minoSpawnPoint: {fileID: 5023614453175415235}
-  towerVertexPoint: {fileID: 8969187964936565780}
-  spawnAndVertexPoint: {fileID: 8812595030270760949}
+  cameraScrollerView: {fileID: 7791808503411507433}
+  spawnAndVertexPointScrollerView: {fileID: 5072894958003855573}
+  minoSpawnerView: {fileID: 7280214224961461099}
+  minoControllerView: {fileID: 4443175990391789273}
   groundPoint: {fileID: 2429152644572839337}
+  gameOverAreaTrigger: {fileID: 3363951371354387582}
+--- !u!114 &4443175990391789273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409581820332954872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a42e0f39f80c4418ee9147142f9519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   rotateButton: {fileID: 5467692481435344316}
   moveMinoEventTrigger: {fileID: 4469384465795368996}
-  gameOverAreaTrigger: {fileID: 3363951371354387582}
+--- !u!114 &7280214224961461099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409581820332954872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938ef6c122b044be8bf2144cc0b97544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minoViewPrefab: {fileID: 3680178814130618713, guid: 11526547e6e0d4845baacdcfdace40eb, type: 3}
+  minoBlockPrefab: {fileID: 2388568421796277661, guid: 03559e5aa7a42f44f8ac9c4d39cc1e2c, type: 3}
+  minoBlockScale: 10
+  minoParent: {fileID: 5721072248929347164}
+  minoSpawnPoint: {fileID: 5023614453175415235}
+--- !u!114 &7791808503411507433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409581820332954872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c7ce893dd8b1d40933e9df7cb77aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerVertexPoint: {fileID: 8969187964936565780}
+--- !u!114 &5072894958003855573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409581820332954872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecd35293dd347b7a2e9b1fae52ffa9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnAndVertexPoint: {fileID: 8812595030270760949}
 --- !u!1 &5915590537990980427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2100,7 +2152,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 230}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 172.49, y: 113.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4799272856186659981
 CanvasRenderer:
@@ -2503,7 +2555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3559850158195160496
 Transform:
   m_ObjectHideFlags: 0

@@ -40,7 +40,7 @@ namespace Model
         async UniTask GameCycleAsync(CancellationToken ct)
         {
             // タワーの頂上まで画面をスクロール
-            await _singlePlayScreenView.ScrollToTowerVertexAsync();
+            await _singlePlayScreenView.ScrollToTowerVertexAsync(ct);
             
             // ミノをスポーンさせる
             var mino = _minoFactory.CreateRandom();

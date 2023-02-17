@@ -347,6 +347,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8667535437341253766, guid: 3338cbc068def7a4aae63d0aae57b6f6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667535437341253766, guid: 3338cbc068def7a4aae63d0aae57b6f6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3338cbc068def7a4aae63d0aae57b6f6, type: 3}
 --- !u!114 &1728655693 stripped
@@ -372,7 +380,6 @@ GameObject:
   - component: {fileID: 1732173770}
   - component: {fileID: 1732173769}
   - component: {fileID: 1732173772}
-  - component: {fileID: 1732173773}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -409,7 +416,6 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 1732173769}
   - {fileID: 1732173772}
-  - {fileID: 1732173773}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -455,21 +461,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singlePlayScreenView: {fileID: 1728655693}
---- !u!114 &1732173773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1732173768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7669027acf950204786d504c3382fe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minoViewPrefab: {fileID: 3680178814130618713, guid: 11526547e6e0d4845baacdcfdace40eb, type: 3}
-  minoBlockPrefab: {fileID: 2388568421796277661, guid: 03559e5aa7a42f44f8ac9c4d39cc1e2c, type: 3}
-  minoBlockScale: 10
 --- !u!1 &1749930139
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +520,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ver 0.3
+  m_text: ver 0.4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
