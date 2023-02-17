@@ -15,8 +15,15 @@ namespace View
     public sealed class SinglePlayScreenView : MonoBehaviour
     {
         [SerializeField] Transform minoParent;
+        
+        [Space(20)]
         [SerializeField] RectTransform minoSpawnPoint;
         [SerializeField] RectTransform towerVertexPoint;
+        [SerializeField] RectTransform maxTowerVertexPoint;
+        [SerializeField] RectTransform spawnAndVertexPoint;
+        [SerializeField] Transform groundPoint;
+        
+        [Space(20)]
         [SerializeField] Button rotateButton;
         [SerializeField] ObservableEventTrigger moveMinoEventTrigger;
         [SerializeField] ObservableTrigger2DTrigger gameOverAreaTrigger;
@@ -24,14 +31,17 @@ namespace View
         [Inject] MinoSpawnerView _minoSpawnerView;
 
         CameraScrollerView _cameraScrollerView;
+        SpawnAndVertexPointScrollerView _spawnAndVertexPointScrollerView;
+        
         readonly Dictionary<MinoId, MinoView> _minoViews = new Dictionary<MinoId, MinoView>();
         MinoView _currentActiveMino = null;
 
         void Awake()
         {
             _cameraScrollerView = new CameraScrollerView(towerVertexPoint);
-            moveMinoEventTrigger.gameObject.SetActive(false);
+            _spawnAndVertexPointScrollerView = new SpawnAndVertexPointScrollerView(spawnAndVertexPoint, maxTowerVertexPoint);
             
+            moveMinoEventTrigger.gameObject.SetActive(false);
             moveMinoEventTrigger.OnDragAsObservable()
                 .Merge(moveMinoEventTrigger.OnPointerDownAsObservable().First())
                 .Select(e => Camera.main.ScreenToWorldPoint(e.position))
@@ -53,9 +63,9 @@ namespace View
             }
         }
         
-        public float GetTowerVertexY()
+        float GetTowerVertexY()
         {
-            var maxY = float.NegativeInfinity;
+            var maxY = groundPoint.position.y;
             foreach (var minoView in _minoViews.Values)
             {
                 maxY = Mathf.Max(minoView.GetVertexY(), maxY);
@@ -66,7 +76,10 @@ namespace View
 
         public async UniTask ScrollToTowerVertexAsync()
         {
-            await _cameraScrollerView.ScrollToTowerVertexAsync(GetTowerVertexY());
+            var towerVertexY = GetTowerVertexY();
+            
+            _spawnAndVertexPointScrollerView.ScrollToTowerVertex(towerVertexY);
+            await _cameraScrollerView.ScrollToTowerVertexAsync(towerVertexY);
         }
         
         public async UniTask SpawnMinoAsync(Mino mino, CancellationToken ct)

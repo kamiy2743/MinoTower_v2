@@ -46,7 +46,7 @@ namespace View
                     minoBlock.transform.localPosition = ((blockPosition - center) * _minoBlockScale);
                     minoBlock.transform.localScale = new Vector3(_minoBlockScale, _minoBlockScale, 1);
                     
-                    minoView.AddBlock(minoBlock.transform);
+                    minoView.AddBlock(minoBlock.GetComponent<BoxCollider2D>());
                 }
             }
 

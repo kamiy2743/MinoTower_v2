@@ -21,7 +21,6 @@ namespace View
 
         internal async UniTask ScrollToTowerVertexAsync(float towerVertexY)
         {
-            Debug.Log(towerVertexY);
             var cameraY = Mathf.Clamp(towerVertexY - _towerVertexPointY, 0, float.PositiveInfinity);
             await _cameraTransform.DOMoveY(cameraY, 0.5f);
         }

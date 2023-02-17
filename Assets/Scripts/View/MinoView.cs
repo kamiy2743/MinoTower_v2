@@ -12,8 +12,8 @@ namespace View
     {
         [SerializeField] new Rigidbody2D rigidbody;
 
-        readonly List<Transform> _blocks = new List<Transform>();
-        internal void AddBlock(Transform block) => _blocks.Add(block);
+        readonly List<BoxCollider2D> _blocks = new List<BoxCollider2D>();
+        internal void AddBlock(BoxCollider2D block) => _blocks.Add(block);
 
         internal void SetX(float x)
         {
@@ -30,6 +30,10 @@ namespace View
         internal void SetSimulation(bool active)
         {
             rigidbody.isKinematic = !active;
+            foreach (var collider in _blocks)
+            {
+                collider.enabled = active;
+            }
         }
 
         internal bool IsSleeping()
@@ -42,7 +46,7 @@ namespace View
             var maxY = float.NegativeInfinity;
             foreach (var block in _blocks)
             {
-                maxY = Mathf.Max(block.position.y + (block.localScale.y * 0.5f), maxY);
+                maxY = Mathf.Max(block.bounds.center.y + block.bounds.extents.y, maxY);
             }
 
             return maxY;
