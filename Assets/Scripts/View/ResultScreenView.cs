@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -19,23 +18,24 @@ namespace View
         internal async UniTask ShowAsync(CancellationToken ct)
         {
             canvasGroup.DOKill();
-            canvasGroup.interactable = false;
             canvasGroup.gameObject.SetActive(true);
             
-            canvasGroup.alpha = 1;
-            await UniTask.DelayFrame(1, cancellationToken: ct);
-            
-            canvasGroup.interactable = true;
+            await canvasGroup.DOFade(1, 0.5f).WithCancellation(ct);
         }
 
-        internal async UniTask HideAsync(CancellationToken ct)
+        internal async UniTask HideAsync(CancellationToken ct, bool immediate = false)
         {
             canvasGroup.DOKill();
+
+            if (!immediate)
+            {
+                await canvasGroup.DOFade(0, 0.5f).WithCancellation(ct);
+            }
+            else
+            {
+                canvasGroup.alpha = 0;
+            }
             
-            canvasGroup.alpha = 0;
-            await UniTask.DelayFrame(1, cancellationToken: ct);
-            
-            canvasGroup.interactable = false;
             canvasGroup.gameObject.SetActive(false);
         }
 

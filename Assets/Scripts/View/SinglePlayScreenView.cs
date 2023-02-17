@@ -9,6 +9,11 @@ namespace View
     {
         [SerializeField] PlayScreenView playScreenView;
         [SerializeField] ResultScreenView resultScreenView;
+
+        void Awake()
+        {
+            resultScreenView.HideAsync(this.GetCancellationTokenOnDestroy(), true).Forget();
+        }
         
         public async UniTask ResetAsync(CancellationToken ct)
         {
