@@ -19,7 +19,6 @@ namespace View
         [Space(20)]
         [SerializeField] Transform minoSpawnPoint;
         [SerializeField] Transform towerVertexPoint;
-        [SerializeField] Transform maxTowerVertexPoint;
         [SerializeField] Transform spawnAndVertexPoint;
         [SerializeField] Transform groundPoint;
         
@@ -131,7 +130,7 @@ namespace View
             return result.winArgumentIndex == 0;
         }
         
-        public void ShowResultView()
+        public void ShowResultScreen()
         {
             Debug.Log("result");
         }

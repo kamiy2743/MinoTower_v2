@@ -59,7 +59,7 @@ namespace Model
             }
             
             // ゲームオーバー
-            _singlePlayScreenView.ShowResultView();
+            _singlePlayScreenView.ShowResultScreen();
 
             // リトライボタンかタイトルボタンが押されるのを待つ
             var retryGame = await _singlePlayScreenView.WaitRetryOrBackToTitleAsync(ct);
