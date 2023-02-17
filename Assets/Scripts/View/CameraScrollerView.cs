@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -19,10 +20,10 @@ namespace View
             _towerVertexPointY = Camera.main.ScreenToWorldPoint(screenPoint).y;
         }
 
-        internal async UniTask ScrollToTowerVertexAsync(float towerVertexY)
+        internal async UniTask ScrollToTowerVertexAsync(float towerVertexY, CancellationToken ct)
         {
             var cameraY = Mathf.Clamp(towerVertexY - _towerVertexPointY, 0, float.PositiveInfinity);
-            await _cameraTransform.DOMoveY(cameraY, 0.5f);
+            await _cameraTransform.DOMoveY(cameraY, 0.5f).WithCancellation(ct);
         }
     }
 }
