@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 namespace View
@@ -12,8 +11,12 @@ namespace View
         [ContextMenu("Fit")]
         void Fit()
         {
-            var currentResolutionString = UnityStats.screenRes.Split("x");
+#if UNITY_EDITOR
+            var currentResolutionString = UnityEditor.UnityStats.screenRes.Split("x");
             var currentResolution = new Vector2(float.Parse(currentResolutionString[0]), float.Parse(currentResolutionString[1]));
+#else
+            var currentResolution = new Vector2(Screen.width, Screen.height);
+#endif
 
             var referenceAspect = referenceResolution.x / referenceResolution.y;
             var currentAspect = currentResolution.x / currentResolution.y;
