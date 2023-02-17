@@ -53,6 +53,7 @@ namespace Model
             var allMinoStopped = await _singlePlayScreenView.WaitMinoFallAsync(mino.Id, ct);
             if (allMinoStopped)
             {
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
                 GameCycleAsync(ct).Forget();
                 return;
             }

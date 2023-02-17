@@ -34,8 +34,6 @@ namespace View
                         break;
                     }
                 }
-
-                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             });
         }
     }
